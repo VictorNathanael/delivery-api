@@ -1,0 +1,14 @@
+{
+    "nextId": 1,
+    "products": ["Pizza", "Hamburger", "Fries", "Stroganoff", "Lasagna"],
+    "orders": [
+        {
+            "id": 0,
+            "client": "Victor Nathanael",
+            "product": "Pizza",
+            "value": 40,
+            "delivered": true,
+            "timestamp": "0"
+        }
+    ]
+}
