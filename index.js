@@ -14,7 +14,7 @@ app.listen(port, () => {
     console.log('API Started');
 });
 
-app.get('/orders', (req, res) => {
+app.get('/', (req, res) => {
     try {
         res.status(200).send(data.orders);
     } catch (err) {
@@ -22,7 +22,16 @@ app.get('/orders', (req, res) => {
     }
 });
 
-app.get('/order/:id', (req, res) => {
+app.post('/', (req, res) => {
+    try {
+        let body = req.body;
+        res.status(200).send(createOrder(body));
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+app.get('/:id', (req, res) => {
     try {
         let id = req.params.id;
         res.status(200).send(data.orders[id]);
@@ -31,7 +40,7 @@ app.get('/order/:id', (req, res) => {
     }
 });
 
-app.put('/orders/:id', (req, res) => {
+app.put('/:id', (req, res) => {
     try {
         let id = req.params.id;
         let body = req.body;
@@ -41,7 +50,7 @@ app.put('/orders/:id', (req, res) => {
     }
 });
 
-app.put('/orders/delivered/:id', (req, res) => {
+app.put('/delivered/:id', (req, res) => {
     try {
         let id = req.params.id;
         let body = req.body;
@@ -51,7 +60,7 @@ app.put('/orders/delivered/:id', (req, res) => {
     }
 });
 
-app.delete('/orders/:id', (req, res) => {
+app.delete('/:id', (req, res) => {
     try {
         let id = req.params.id;
         res.status(200).send(deleteOrder(id));
@@ -60,7 +69,7 @@ app.delete('/orders/:id', (req, res) => {
     }
 });
 
-app.get('/orders/client', (req, res) => {
+app.get('/client', (req, res) => {
     try {
         let body = req.body;
         res.status(200).send(findClient(body));
@@ -69,7 +78,7 @@ app.get('/orders/client', (req, res) => {
     }
 });
 
-app.get('/orders/products', (req, res) => {
+app.get('/products', (req, res) => {
     try {
         let body = req.body;
         res.status(200).send(consultOrder(body));
@@ -86,6 +95,33 @@ app.get('/moreOrders', (req, res) => {
     }
 });
 
+function createOrder(body) {
+    let newOrder;
+    newOrder = {
+        id: data.nextId++,
+        client: body.client,
+        product: body.product,
+        value: body.value,
+        delivered: false,
+        timestamp: new Date(),
+    };
+    data.orders.push(newOrder);
+    fs.writeFile(
+        global.filename,
+        JSON.stringify(data, null, 2),
+        'utf8',
+        function (err) {
+            if (err) {
+                return console.log(err);
+            }
+
+            console.log('The file was saved!');
+        }
+    );
+
+    return newOrder;
+}
+
 function updateOrder(id, body) {
     const order = data.orders.find((order) => {
         return order.id === Number(id);
@@ -97,6 +133,20 @@ function updateOrder(id, body) {
     order.client = body.client;
     order.product = body.product;
     order.value = body.value;
+    order.delivered = body.delivered;
+
+    fs.writeFile(
+        global.filename,
+        JSON.stringify(data, null, 2),
+        'utf8',
+        function (err) {
+            if (err) {
+                return console.log(err);
+            }
+
+            console.log('The file was saved!');
+        }
+    );
 
     return order;
 }
@@ -109,19 +159,43 @@ function updateDelivered(id, body) {
 
     order.delivered = body.delivered;
 
+    fs.writeFile(
+        global.filename,
+        JSON.stringify(data, null, 2),
+        'utf8',
+        function (err) {
+            if (err) {
+                return console.log(err);
+            }
+
+            console.log('The file was saved!');
+        }
+    );
+
     return order;
 }
 
 function deleteOrder(id) {
-    const order = data.orders.find((order) => {
-        return order.id === Number(id);
-    });
+    const idFound = data.orders.find((order) => order.id === Number(id));
 
-    if (!order) return 'order not found';
+    if (!idFound) return `id ${id} not found`;
 
-    delete data.orders[id];
+    data.orders = data.orders.filter((order) => order.id !== parseInt(id));
 
-    return data.orders;
+    fs.writeFile(
+        global.filename,
+        JSON.stringify(data, null, 2),
+        'utf8',
+        function (err) {
+            if (err) {
+                return console.log(err);
+            }
+
+            console.log('The file was saved!');
+        }
+    );
+
+    return `id ${id} deleted`;
 }
 
 function findClient(body) {
@@ -130,7 +204,6 @@ function findClient(body) {
             return order.client === body.client && order.delivered === true;
         })
         .reduce((s, v) => (s += v.value), 0);
-
     return { client };
 }
 
