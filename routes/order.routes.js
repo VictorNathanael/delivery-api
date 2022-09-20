@@ -3,15 +3,15 @@ import OrderController from '../controllers/order.controller.js';
 
 const router = express.Router();
 
-router.get('/', OrderController.getOrders);
+router.get('/orders', OrderController.getOrders);
 router.post('/', OrderController.createOrder);
-router.get('/:id', OrderController.getOrder);
+router.get('/orders/:id', OrderController.getOrder);
 router.put('/:id', OrderController.updateOrder);
 router.put('/delivered/:id', OrderController.updateDelivered);
 router.delete('/:id', OrderController.deleteOrder);
 router.get('/client', OrderController.findClient);
 router.get('/products', OrderController.consultOrder);
-router.get('/moreOrders', OrderController.moreOrders);
+router.get('/moreorders', OrderController.moreOrders);
 
 router.use((err, req, res, next) => {
     console.error(`${req.method} ${req.baseUrl} - ${err.message}`);
