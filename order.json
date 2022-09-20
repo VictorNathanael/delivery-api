@@ -21,7 +21,7 @@
         {
             "id": 2,
             "client": "Iohara Ferreira",
-            "product": "Lasagna",
+            "product": "Fries",
             "value": 17,
             "delivered": true,
             "timestamp": "2022-09-15T14:13:53.357Z"
@@ -29,7 +29,7 @@
         {
             "id": 3,
             "client": "Mikael Muniz",
-            "product": "Lasagna",
+            "product": "Stroganoff",
             "value": 30,
             "delivered": true,
             "timestamp": "2022-09-15T14:13:53.357Z"
@@ -47,7 +47,7 @@
             "client": "Noélia Ferreira",
             "product": "Lasagna",
             "value": 70,
-            "delivered": false,
+            "delivered": true,
             "timestamp": "2022-09-15T14:13:53.357Z"
         }
     ]
