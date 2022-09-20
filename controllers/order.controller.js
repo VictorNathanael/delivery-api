@@ -9,6 +9,15 @@ async function getOrders(req, res, next) {
     }
 }
 
+async function getOrder(req, res, next) {
+    try {
+        res.status(200).send(await OrderService.getOrder(req.params.id));
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+}
+
 async function createOrder(req, res, next) {
     try {
         let body = req.body;
@@ -17,16 +26,6 @@ async function createOrder(req, res, next) {
         }
 
         res.status(200).send(await OrderService.createOrder(body));
-    } catch (err) {
-        console.error(err);
-        next(err);
-    }
-}
-
-async function getOrder(req, res, next) {
-    try {
-        let id = req.params.id;
-        res.status(200).send(await OrderService.getOrder(id));
     } catch (err) {
         console.error(err);
         next(err);
@@ -99,8 +98,8 @@ async function moreOrders(req, res, next) {
 
 export default {
     getOrders,
-    createOrder,
     getOrder,
+    createOrder,
     updateOrder,
     updateDelivered,
     deleteOrder,

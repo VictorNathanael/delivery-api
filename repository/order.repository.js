@@ -9,7 +9,11 @@ function getOrders() {
 }
 
 function getOrder(id) {
-    return data.orders[id];
+    const order = data.orders.find((order) => order.id === parseInt(id));
+    if (order) {
+        return order;
+    }
+    throw new Error('Registro não encontrado');
 }
 
 function createOrder(body) {
@@ -22,7 +26,7 @@ function createOrder(body) {
         delivered: false,
         timestamp: new Date(),
     };
-
+    if (!data.products.includes(body.product)) return 'this product not exist';
     data.orders.push(newOrder);
     fs.writeFile(
         global.filename,
@@ -74,8 +78,8 @@ function updateDelivered(id, body) {
         return order.id === Number(id);
     });
     if (!order) return 'order not found';
-
     order.delivered = body.delivered;
+    if (order.delivered == undefined) return 'delivered is required';
 
     fs.writeFile(
         global.filename,
@@ -122,17 +126,23 @@ function findClient(body) {
             return order.client === body.client && order.delivered === true;
         })
         .reduce((s, v) => (s += v.value), 0);
-    return { client };
+    return { 'total value': client };
 }
 
 function consultOrder(body) {
-    const orders = data.orders
-        .filter((order) => {
-            return order.product === body.product && order.delivered === true;
-        })
-        .reduce((s, v) => (s += v.value), 0);
-
-    return { orders };
+    try {
+        const orders = data.orders
+            .filter((order) => {
+                return (
+                    order.product.toLowerCase() ===
+                        body.product.toLowerCase() && order.delivered === true
+                );
+            })
+            .reduce((s, v) => (s += v.value), 0);
+        return { 'total value': orders };
+    } catch {
+        return 'product is required';
+    }
 }
 
 function moreOrders() {
@@ -154,14 +164,13 @@ function moreOrders() {
     for (const order of orders) {
         result.push(`${order.product} - ${order.count}`);
     }
-
     return result;
 }
 
 export default {
     getOrders,
-    createOrder,
     getOrder,
+    createOrder,
     updateOrder,
     updateDelivered,
     deleteOrder,

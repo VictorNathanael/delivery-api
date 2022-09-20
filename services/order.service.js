@@ -38,8 +38,8 @@ async function moreOrders() {
 
 export default {
     getOrders,
-    createOrder,
     getOrder,
+    createOrder,
     updateOrder,
     updateDelivered,
     deleteOrder,
