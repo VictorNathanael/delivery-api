@@ -8,9 +8,7 @@ Essa api foi desenvolvida em Node.js e tem como objetivo controlar os pedidos de
 - [Postman](https://www.postman.com/downloads/)
 
 - [Node](https://nodejs.org/en/)
-```
-npm install node
-```
+
 - [Express](https://expressjs.com/pt-br/starter/installing.html)
 ```
 npm install express
@@ -54,20 +52,20 @@ GET: localhost:3000/orders
 GET: localhost:3000/orders/id
 ```
 ---
-retorna o valor total dos pedidos de um determinado ___cliente___ passado dentro do body da seguinte forma:
+retorna o valor total dos pedidos de um determinado ___cliente___ passado dentro dos params da seguinte forma:
 ```
 {
-"client": "Victor Nathanael"
+client: 'Victor Nathanael'
 }
 ```
 ```
 GET: localhost:3000/client
 ```
 ---
-retorna o valor total dos pedidos de um determinado ___produto___ passado dentro do body da seguinte forma:
+retorna o valor total dos pedidos de um determinado ___produto___ passado dentro dos params da seguinte forma:
 ```
 {
-"product": "Pizza"
+product: 'Pizza'
 }
 ```
 ```
@@ -81,6 +79,9 @@ GET: localhost:3000/moreOrders
 ---
 ## Update
 
+```
+PUT: localhost:3000/id
+```
 O modelo em JSON a ser enviado no body da requisição é esse: 
 ```
 {
@@ -90,19 +91,20 @@ O modelo em JSON a ser enviado no body da requisição é esse:
 }
 
 ```
-```
-PUT: localhost:3000/id
-```
+
 ---
+
+```
+PUT: localhost:3000/delivered/id
+```
+
 O modelo em JSON a ser enviado no body da requisição é esse: 
 ```
 {
   "delivered": true,
 }
 ```
-```
-PUT: localhost:3000/delivered/id
-```
+
 ## Delete
 ```
 DELETE: localhost:3000/id
