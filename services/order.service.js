@@ -24,12 +24,12 @@ async function deleteOrder(id) {
     return await OrderRepository.deleteOrder(id);
 }
 
-async function findClient(body) {
-    return await OrderRepository.findClient(body);
+async function findClient(query) {
+    return await OrderRepository.findClient(query);
 }
 
-async function consultOrder(body) {
-    return await OrderRepository.consultOrder(body);
+async function consultOrder(query) {
+    return await OrderRepository.consultOrder(query);
 }
 
 async function moreOrders() {

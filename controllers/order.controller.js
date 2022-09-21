@@ -69,8 +69,8 @@ async function deleteOrder(req, res, next) {
 
 async function findClient(req, res, next) {
     try {
-        let body = req.body;
-        res.status(200).send(await OrderService.findClient(body));
+        let query = req.query;
+        res.status(200).send(await OrderService.findClient(query));
     } catch (err) {
         console.error(err);
         next(err);
@@ -79,8 +79,8 @@ async function findClient(req, res, next) {
 
 async function consultOrder(req, res, next) {
     try {
-        let body = req.body;
-        res.status(200).send(await OrderService.consultOrder(body));
+        let query = req.query;
+        res.status(200).send(await OrderService.consultOrder(query));
     } catch (err) {
         console.error(err);
         next(err);

@@ -120,22 +120,22 @@ function deleteOrder(id) {
     return `id ${id} deleted`;
 }
 
-function findClient(body) {
+function findClient(query) {
     const client = data.orders
         .filter((order) => {
-            return order.client === body.client && order.delivered === true;
+            return order.client === query.client && order.delivered === true;
         })
         .reduce((s, v) => (s += v.value), 0);
     return { 'total value': client };
 }
 
-function consultOrder(body) {
+function consultOrder(query) {
     try {
         const orders = data.orders
             .filter((order) => {
                 return (
                     order.product.toLowerCase() ===
-                        body.product.toLowerCase() && order.delivered === true
+                        query.product.toLowerCase() && order.delivered === true
                 );
             })
             .reduce((s, v) => (s += v.value), 0);
