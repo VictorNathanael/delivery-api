@@ -10,22 +10,20 @@ Essa api foi desenvolvida em Node.js e tem como objetivo controlar os pedidos de
 - [Node](https://nodejs.org/en/)
 
 - [Express](https://expressjs.com/pt-br/starter/installing.html)
+
+
+Instale as dependencias do projeto
+
 ```
-npm install express
+npm install
 ```
-- [Nodemon](https://www.npmjs.com/package/nodemon)
-```
-npm install nodemon
-```
+
 
 ## ⚙️ Consultando os endpoints
 
 A aplicação consiste em quatro operações básicas na bases de dados, um [CRUD](https://developer.mozilla.org/pt-BR/docs/Glossary/CRUD)
 
-No terminal, execute o nodemon da seguinte forma:
-```
-nodemon index.js
-```
+
 Com o Postman instalado, você pode executar as requisições a seguir.
 ## Create
 ```
